@@ -1,0 +1,1 @@
+curl -d "id=1&name=ethan&age=20" -X POST http://localhost:3005/person/create
