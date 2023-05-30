@@ -3,11 +3,11 @@ import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CatsController } from './controller/cats.controller';
-import { PersonEntity } from './entity/person.entity';
+import { CatsController } from './cat/cats.controller';
+import { PersonEntity } from './person/person.entity';
 import { RolesGuard } from './guard/authGuard';
 import { LoggerMiddleware } from './middleWare/loggerMiddleware';
-import { PersonModule } from './module/person.module';
+import { PersonModule } from './person/person.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
-import { PersonDto } from "src/dto/person.dto";
-import { PersonEntity } from "src/entity/person.entity";
-import { PersonService } from "src/service/person.service";
+import { PersonDto } from "src/person/person.dto";
+import { PersonEntity } from "src/person/person.entity";
+import { PersonService } from "src/person/person.service";
 
 @Controller('person')
 export class PersonController {
