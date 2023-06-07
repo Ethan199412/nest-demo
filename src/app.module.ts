@@ -1,23 +1,17 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CatsController } from './controller/cats.controller';
-import { RolesGuard } from './guard/authGuard';
-import { LoggerMiddleware } from './middleWare/loggerMiddleware';
+import { CatsModule } from './cats/cats.module';
+import { DogsModule } from './dogs/dogs.module';
+import { LoggerMiddleware } from './middleware/loggerMiddleware';
 
 @Module({
-  imports: [],
-  controllers: [AppController, CatsController],
-  providers: [AppService,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard
-    }
-  ],
+  imports: [CatsModule, DogsModule],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('api/cat')
+    consumer.apply(LoggerMiddleware).forRoutes('cats');
   }
 }
