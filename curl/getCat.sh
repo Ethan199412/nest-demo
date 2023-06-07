@@ -1,0 +1,1 @@
+curl -G -H 'authorization: 123' -d 'number=4' -d 'type="gold"' http://localhost:3005/api/cat 

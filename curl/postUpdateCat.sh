@@ -1,0 +1,1 @@
+curl -d 'number=10' -d 'type="gold"' http://localhost:3005/api/updateCat
