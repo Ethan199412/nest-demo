@@ -1,13 +1,14 @@
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
-export class CatsService {
+export class DogService {
     getAll() {
+        console.log('main func')
         return [{
-            name: '金渐层',
+            name: '柴犬',
             number: 10
         }, {
-            name: '橘猫',
+            name: '柯基',
             number: 6
         }]
     }
