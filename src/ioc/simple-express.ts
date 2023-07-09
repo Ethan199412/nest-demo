@@ -33,6 +33,7 @@ function express() {
           return
         } else {
           next(err);
+          return
         }
       }
 
