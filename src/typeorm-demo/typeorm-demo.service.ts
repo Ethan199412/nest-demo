@@ -48,4 +48,17 @@ export class TypeormDemoService {
                 "t1.version = t2.max_ver AND t1.region = t2.region"
             ).getRawMany();
     }
+
+    async maxRecord() {
+        const subQuery = this.typeormDemoRepository
+            .createQueryBuilder()
+            .select('MAX(create_date) max_create_date').getQuery();
+
+        // 这里千万别忘了加小括号
+        return await this.typeormDemoRepository
+            .createQueryBuilder()
+            .where(`create_date IN (${subQuery})`)
+            .getOne();
+
+    }
 }
