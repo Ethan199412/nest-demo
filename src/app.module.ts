@@ -9,6 +9,7 @@ import { LoggerMiddleware } from './middleware/loggerMiddleware';
 import { TypeormDemoModule } from './typeorm-demo/typeorm-demo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MarketEntity, TypeormDemoEntity } from './typeorm-demo/typeorm-demo.entity';
+import { SseModule } from './sse/sse.module';
 
 @Module({
   // imports: [ScheduleModule.forRoot()],
@@ -23,7 +24,7 @@ import { MarketEntity, TypeormDemoEntity } from './typeorm-demo/typeorm-demo.ent
     database: 'test',
     entities: [TypeormDemoEntity, MarketEntity],
     synchronize: true,
-  })],
+  }), SseModule],
 })
 
 export class AppModule implements NestModule {

@@ -13,10 +13,10 @@ import { Type } from './myDecorator/myDecorator';
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
+  // @Get()
+  // getHello(): string {
+  //   return this.appService.getHello();
+  // }
 
   // @UseFilters(HttpExceptionFilter)
   @Get('api/cat')

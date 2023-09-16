@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>hello</div>
+    <script>
+        const eventSource = new EventSource('//localhost:3010/sse/sse');
+
+        eventSource.onmessage = event => {
+            const message = event.data;
+            console.log('Received message:', message);
+            // 在这里处理接收到的消息，可以更新前端页面等操作
+        };
+
+        eventSource.onerror = error => {
+            console.error('Error occurred:', error);
+        };
+    </script>
+</body>
+
+</html>
