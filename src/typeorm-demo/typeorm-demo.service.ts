@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import { MarketEntity, TypeormDemoEntity } from './typeorm-demo.entity';
 
 @Injectable()
@@ -20,12 +20,41 @@ export class TypeormDemoService {
     }
 
     async test() {
+        const conditions = [{ region: 'SG', version: '3.04.2' }, { region: 'MY', version: '3.04.3' }]
+        // return await this.typeormDemoRepository.createQueryBuilder().select('*')
+        //     .where(conditions)
+        //     .getRawMany()
+
+        // const res = await this.marketRepository.createQueryBuilder()
+        //     .select(['region', 'version', 'MAX(submission_date) as max_date'])
+        //     .where(conditions)
+        //     .groupBy('region, version')
+        //     .getRawMany()
+
+        const res = await this.marketRepository.createQueryBuilder('t1').select('*')
+            .innerJoin(subquery => {
+                return subquery.select(['region', 'version', 'MAX(submission_date) as max_date'])
+                    .from(MarketEntity, 't2')
+                    
+                    .andWhere(new Brackets(qb => {
+                        qb.where(conditions)
+                    }))
+                    .groupBy('region, version')
+                    .having('region = :region', { region: 'SG' })
+            }, 't2', 't1.version=t2.version and t1.region = t2.region and t2.max_date = t1.submission_date')
+            // .getQuery()
+            .getRawMany()
+
+        return res
+
+
+
         // return await this.typeormDemoRepository.createQueryBuilder('t1').select(['t1.id','t1.version',]).getOne()
         // 一般有 join 的时候就需要用 getRawMany
-        return await this.typeormDemoRepository
-            .createQueryBuilder('t1')
-            .select(['*', 't2.*'])
-            .innerJoin(MarketEntity, 't2', 't1.region = t2.region and t1.version = t2.version').getRawMany()
+        // return await this.typeormDemoRepository
+        //     .createQueryBuilder('t1')
+        //     .select(['*', 't2.*'])
+        //     .innerJoin(MarketEntity, 't2', 't1.region = t2.region and t1.version = t2.version').getRawMany()
 
         // return await this.marketRepository.find()
 
@@ -60,5 +89,10 @@ export class TypeormDemoService {
             .where(`create_date IN (${subQuery})`)
             .getOne();
 
+    }
+
+    async saveAndReturnId(record: MarketEntity) {
+        const { id } = await this.marketRepository.save(record)
+        return id
     }
 }

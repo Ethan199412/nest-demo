@@ -20,7 +20,7 @@ export class TypeormDemoEntity {
 @Entity('app_store_market_tab')
 export class MarketEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column()
   region: string;
@@ -30,5 +30,8 @@ export class MarketEntity {
 
   @Column({type: 'tinyint'})
   update_market_materials: boolean;
+
+  @Column({type:'datetime'})
+  submission_date: Date;
 
 }
