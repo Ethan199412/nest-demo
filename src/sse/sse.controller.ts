@@ -15,8 +15,10 @@ export class SseController {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.flushHeaders();
 
+        // 被订阅了则记录返回对象
         this.clients.push(res);
 
+        // 关闭的时候取消对应的 client
         req.on('close', () => {
             const index = this.clients.indexOf(res);
             if (index !== -1) {
@@ -28,7 +30,13 @@ export class SseController {
     sendSseMessage(message: string) {
         console.log('[p1.0] length', this.clients.length)
         this.clients.forEach(client => {
-            client.write(`data: ${message}\n\n`);
+            // 发送消息
+            const obj = {
+                a: 1
+            }
+            // client.write(`data: ${message}\n\n`); // JSON.stringify(obj)
+            // 这个 data 前缀和 \n\n 后缀必须加，否则前端收不到。
+            client.write(`data: ${JSON.stringify(obj)}\n\n`)
         });
     }
 
