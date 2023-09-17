@@ -11,6 +11,7 @@
 <body>
     <div>hello</div>
     <script>
+        
         const eventSource = new EventSource('//localhost:3010/sse/sse');
 
         eventSource.onmessage = event => {
