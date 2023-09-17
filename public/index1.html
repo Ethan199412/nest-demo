@@ -11,17 +11,13 @@
 <body>
     <div>hello</div>
     <script>
-        const eventSource = new EventSource('//localhost:3010/sse/sse');
-
-        eventSource.onmessage = event => {
-            const message = event.data;
-            console.log('Received message:', message);
-            // 在这里处理接收到的消息，可以更新前端页面等操作
-        };
-
-        eventSource.onerror = error => {
-            console.error('Error occurred:', error);
-        };
+        function callback() {
+            console.log(new Date())
+            setTimeout(() => {
+                callback()
+            })
+        }
+        callback()
     </script>
 </body>
 
