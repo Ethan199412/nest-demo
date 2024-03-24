@@ -10,31 +10,30 @@ import { TypeormDemoModule } from './typeorm-demo/typeorm-demo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   MarketEntity,
-  SubmitEntity,
   TypeormDemoEntity,
 } from './typeorm-demo/typeorm-demo.entity';
 import { SseModule } from './sse/sse.module';
-import { StreamController } from './stream/stream.controller';
-import { StreamModule } from './stream/stream.module';
+import { NestSseModule } from './nest-sse/nest-sse.module';
+import { ModuleRef } from '@nestjs/core';
 
 @Module({
   // imports: [ScheduleModule.forRoot()],
-  controllers: [AppController, StreamController],
+  controllers: [AppController],
   providers: [AppService],
   imports: [
-    TypeormDemoModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '123456',
-      database: 'test',
-      entities: [TypeormDemoEntity, MarketEntity, SubmitEntity],
-      synchronize: true,
-    }),
+    // TypeormDemoModule,
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: 'localhost',
+    //   port: 3306,
+    //   username: 'root',
+    //   password: '123456',
+    //   database: 'test',
+    //   entities: [TypeormDemoEntity, MarketEntity],
+    //   synchronize: true,
+    // }),
     SseModule,
-    StreamModule,
+    // NestSseModule,
   ],
 })
 export class AppModule implements NestModule {
