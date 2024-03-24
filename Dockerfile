@@ -14,4 +14,4 @@ COPY . .
 
 EXPOSE 3010
 
-CMD [ "node", "index.js" ]
+CMD [ "node", "main.js" ]
