@@ -17,17 +17,7 @@ export class TypeormDemoController {
 
     }
     @Get('test')
-    @ApiOperation({ summary: 'test 接口', description: '描述' })
-    // @ApiQuery({ name: 'page', description: '分页信息' })
-    // @ApiResponse({ status: 403, description: '小黑子我是 403' })
     async test() {
-        // return await this.typeormDemoService.sub()
-        // return await this.typeormDemoService.maxRecord()
-        // return await this.typeormDemoService.saveAndReturnId({
-        //     update_market_materials: true,
-        //     region: 'SG',
-        //     version: '3.04.2'
-        // })
         return await this.typeormDemoService.test()
     }
 

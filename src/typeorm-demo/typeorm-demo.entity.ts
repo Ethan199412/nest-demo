@@ -10,7 +10,7 @@ export class TypeormDemoEntity {
   @Column()
   region: string;
 
-  @Column({type: 'datetime'})
+  @Column({ type: 'datetime' })
   create_date: Date;
 
   @Column()
@@ -28,10 +28,33 @@ export class MarketEntity {
   @Column()
   version: string;
 
-  @Column({type: 'tinyint'})
+  @Column({ type: 'tinyint' })
   update_market_materials: boolean;
 
-  @Column({type:'datetime'})
+  @Column({ type: 'datetime' })
   submission_date: Date;
+}
 
+@Entity('submit_tab')
+export class SubmitEntity {
+  @PrimaryGeneratedColumn({ type: 'int' })
+  id: number;
+
+  @Column({type:'datetime'})
+  publish_time: Date;
+
+  @Column()
+  resource_id: number;
+
+  @Column()
+  resource_name: string;
+
+  @Column()
+  submit_status: string;
+
+  @Column()
+  resource_version: string;
+
+  @Column()
+  translation_version: string;
 }
