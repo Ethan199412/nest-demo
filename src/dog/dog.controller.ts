@@ -2,7 +2,7 @@ import { Controller, Get, HttpStatus, Post, Res, UseInterceptors } from "@nestjs
 import { Response } from "express";
 import { CatService } from "src/cat/cat.service";
 import { LoggingInterceptor } from "src/interceptor/loggingInterceptor";
-import { LoggerMiddleware } from "src/d/loggerMiddleware";
+import { LoggerMiddleware } from "src/middleware/loggerMiddleware";
 import { DogService } from "./dog.service";
 
 @Controller('dog')
