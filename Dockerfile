@@ -9,9 +9,10 @@ COPY package.json ./
 COPY yarn.lock ./
 
 RUN yarn
+RUN npm run build
 
 COPY . .
 
 EXPOSE 3010
 
-CMD [ "node", "main.js" ]
+CMD [ "node", "dist/main.js" ]

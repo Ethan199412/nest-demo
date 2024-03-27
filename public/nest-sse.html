@@ -10,12 +10,18 @@
 
 <body>
   <div>hello</div>
+  <div id="container"></div>
   <script>
-    const eventSource = new EventSource('//localhost:3010/nest-sse/update_record');
+    const eventSource = new EventSource('//localhost:3010/nest-sse/subscribe');
 
     eventSource.onmessage = event => {
       const message = event.data;
       console.log('Received message:', message);
+      const container = document.getElementById('container')
+      var newDiv = document.createElement("div");
+      newDiv.id = "new-div";
+      newDiv.innerHTML = message
+      container.appendChild(newDiv)
       // 在这里处理接收到的消息，可以更新前端页面等操作
     };
 

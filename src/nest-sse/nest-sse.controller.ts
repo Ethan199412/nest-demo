@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, Sse } from '@nestjs/common';
+import { Controller, Get, Query, Req, Res, Sse } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { fromEvent, map, Observable } from 'rxjs';
 import { NestSseService } from './nest-sse.service';
@@ -11,23 +11,22 @@ export class NestSseController {
     private readonly eventEmitter: EventEmitter2,
   ) {}
 
-  @Sse('update_record')
-  updateRecord(@Req() req, @Res() res: Response): Observable<MessageEvent> {
+  @Sse('subscribe')
+  async subscribe(@Req() req, @Res() res: Response) {
     const address = req.socket.remoteAddress;
     const port = req.socket.remotePort;
-    this.nestSseService.addClient(`${address}:${port}`, res as any, req);
-    return fromEvent(this.eventEmitter, 'sse:record.updated_sse').pipe(
-      map((data) => {
-        return data as MessageEvent;
-      }),
-    );
+    return this.nestSseService.subscribe(`${address}:${port}`, res, req);
   }
 
   @Get('sse')
   send() {
-    setInterval(() => {
-      this.nestSseService.emit({ data: { num: 123 }, module: 'num' });
-    }, 1000);
+    this.nestSseService.emit({ data: { num: 123 } });
+  }
+
+  @Get('send_to_client')
+  sendToClient(@Query() query) {
+    const { client_id } = query;
+    this.nestSseService.sendToClient(client_id, { data: 'test' });
   }
 
   //   @Get('/subscribe')
