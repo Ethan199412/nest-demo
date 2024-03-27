@@ -9,9 +9,9 @@ COPY package.json ./
 COPY yarn.lock ./
 
 RUN yarn
-RUN npm run build
-
 COPY . .
+
+RUN npm run build
 
 EXPOSE 3010
 
