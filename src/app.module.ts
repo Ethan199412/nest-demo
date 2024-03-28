@@ -32,7 +32,9 @@ import { ModuleRef } from '@nestjs/core';
     //   entities: [TypeormDemoEntity, MarketEntity],
     //   synchronize: true,
     // }),
+    DogModule,
     SseModule,
+    CatModule,
     // NestSseModule,
   ],
 })
