@@ -62,4 +62,9 @@ export class AppController {
       msg: '成功',
     });
   }
+
+  @Get('test')
+  async test(){
+    return 'success'
+  }
 }

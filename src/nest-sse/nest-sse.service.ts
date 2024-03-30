@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Response } from 'express';
+import { fromEvent, map } from 'rxjs';
 
 export enum SseActionEnum {
   CREATE = 'create',
@@ -9,9 +10,9 @@ export enum SseActionEnum {
 }
 
 export class EmitSSEData {
-  @IsString()
-  @IsNotEmpty()
-  module: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // module: string;
 
   @IsEnum(SseActionEnum)
   @IsOptional()
@@ -28,7 +29,16 @@ export class NestSseService {
   private clients = new Map<string, Response>();
 
   emit(data: EmitSSEData) {
-    this.eventEmitter.emit('sse:record.updated_sse', data);
+    this.eventEmitter.emit('push_data', data);
+  }
+
+  subscribe(clientId: string, res: Response, req: any) {
+    this.addClient(clientId, res, req);
+    return fromEvent(this.eventEmitter, 'push_data').pipe(
+      map((data) => {
+        return data as MessageEvent;
+      }),
+    );
   }
 
   addClient(clientId: string, res: Response, req: any) {
@@ -46,5 +56,20 @@ export class NestSseService {
       },
       false,
     );
+  }
+
+  sendToClient(clientId: string, data: any) {
+    const client = this.clients.get(clientId);
+    if (client) {
+      client.write(`data: ${JSON.stringify(data)}\n\n`);
+    }
+  }
+
+  pushData() {
+    return new Promise<MessageEvent>((resolve) => {
+      this.eventEmitter.addListener('push_data', (event: MessageEvent) => {
+        resolve(event);
+      });
+    });
   }
 }

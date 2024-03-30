@@ -8,10 +8,11 @@ RUN yarn config set registry https://registry.npmmirror.com
 COPY package.json ./
 COPY yarn.lock ./
 
-RUN yarn 
-
+RUN yarn
 COPY . .
+
+RUN npm run build
 
 EXPOSE 3010
 
-CMD [ "node", "main.js" ]
+CMD [ "node", "dist/main.js" ]

@@ -13,6 +13,8 @@ async function bootstrap() {
 
   // app.useGlobalFilters(new HttpExceptionFilter())
   app.enableCors();
+  app.setGlobalPrefix('api/v1')
+  
   const options = new DocumentBuilder()
     .addBearerAuth()
     .setTitle('小满的飞机')
